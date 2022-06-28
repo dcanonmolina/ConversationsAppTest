@@ -1,50 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useState } from 'react'
-import checkPassword from './services/validateAccess'
-import PanelMessaging from './components/panelMessaging'
-import PanelHistory from './components/panelHistory'
-import './indexTxt.css'
+import React, { Component } from 'react';
+import ConversationsApp from './ConversationsApp';
+import './assets/App.css';
+import 'antd/dist/antd.css';
 
 
-function App() {
-  const [ password, setPassword] = useState("");
-  const [ panelvisible, setPanelVisible] = useState(false)
-  const [ phonelist, setPhoneNumberList ] = useState([])
-  const [ identity, setIdentity] = useState("testing")
-  
-
-  const handleTextChange = event => {
-    const { name, value } = event.target;
-    setPassword( value);
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
   }
 
-  const handleControlVisible = () =>{
-
-    checkPassword(password)
-      .then(data =>{
-        if(data){
-          setPhoneNumberList(data)
-          setIdentity('testing')
-          setPanelVisible(!panelvisible)
-          
-        }
-      });
-
+  render() {
+    return <ConversationsApp />
   }
-
-  return (
-    <div className="App">
-      <div className="milinea">
-        Password
-        <input id="txtPwd" type="password" onChange={handleTextChange} value={password}></input>
-        <button id="sendPwd" onClick={() => handleControlVisible()}>Validate</button>
-      </div>
-      {panelvisible ? <div><PanelMessaging data={phonelist} password={password}/><PanelHistory identity={identity}/></div>:null}
-
-    </div>
-  );
 }
-
 
 export default App;
